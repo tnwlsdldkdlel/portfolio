@@ -19,6 +19,16 @@ export const metadata: Metadata = {
   title: "오수진 | The Performance Architect",
   description: "데이터와 측정 도구를 통해 비즈니스 문제를 해결하는 퍼포먼스 엔지니어",
   keywords: ["프론트엔드", "성능 최적화", "퍼포먼스 엔지니어", "포트폴리오"],
+  metadataBase: new URL('https://portfolio.example.com'), // 실제 도메인으로 변경 필요
+  openGraph: {
+    title: "오수진 | The Performance Architect",
+    description: "데이터와 측정 도구를 통해 비즈니스 문제를 해결하는 퍼포먼스 엔지니어",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

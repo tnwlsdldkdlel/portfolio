@@ -1,3 +1,6 @@
+// 정적 생성으로 성능 최적화
+export const dynamic = 'force-static';
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-white text-black">

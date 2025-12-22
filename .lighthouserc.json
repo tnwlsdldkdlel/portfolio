@@ -1,8 +1,16 @@
 {
   "ci": {
     "collect": {
-      "numberOfRuns": 3,
-      "url": ["http://localhost:3000"]
+      "numberOfRuns": 5,
+      "url": ["http://localhost:3000"],
+      "settings": {
+        "throttling": {
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1
+        },
+        "onlyAudits": []
+      }
     },
     "assert": {
       "assertions": {
