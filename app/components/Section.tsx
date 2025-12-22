@@ -13,7 +13,7 @@ export default function Section({ id, children, className = "", isFirst = false 
       id={id}
       className={`min-h-[calc(100vh-6rem)] py-20 px-4 ${isFirst ? "pt-8" : ""} ${className}`}
     >
-      <div className="container mx-auto">
+      <div className="container mx-auto text-left">
         {children}
       </div>
     </section>

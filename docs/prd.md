@@ -15,24 +15,28 @@
 ---
 
 ## 3. 정보 구조 (Information Architecture)
-1.  **Portfolio Guide:** 지표 해석 및 전체적인 사이트 탐색 가이드.
-2.  **About Me:** '측정 가능한 성과'를 중시하는 엔지니어 정체성.
-3.  **Career Summary:** 풀스택 배경에서 시니어 프론트엔드로의 성장 연대기.
-4.  **Key Projects (Integrated Metrics):** 프로젝트별 문제 해결 과정과 핵심 성과 지표(Impact Badges).
-5.  **Technical Strengths:** 도구 선택의 논리적 근거 및 아키텍처 판단 기준.
-6.  **Writing & Documentation (Live Feed):** Velog API를 통한 실시간 포스트 노출.
-7.  **Smart Resume CTA:** 요약 팝업이 포함된 PDF 이력서 다운로드 시스템.
+1.  **Info:** '측정 가능한 성과'를 중시하는 엔지니어 정체성.
+2.  **Projects:** 프로젝트별 문제 해결 과정과 핵심 성과 지표(Impact Badges).
+3.  **Media:** Velog API를 통한 실시간 포스트 노출.
+
+**네비게이션 메뉴:**
+- Info
+- Projects
+- Media
 
 ---
 
 ## 4. 섹션별 상세 요구사항
 
-### 4.1. 디자인 시스템: Sophisticated Monotone
-* **테마:** Strict Black & White (B&W).
-* **컬러:** * Background: `#FFFFFF`
-    * Text/Borders/Buttons: `#000000`
-    * Accent: 검정 배경에 흰색 글씨(Inverted)를 성과 지표 강조에 활용.
+### 4.1. 디자인 시스템
+* **테마:** 미니멀한 모던 디자인
+* **컬러:** 
+    * Background: `#FFFFFF`
+    * Text: `#000000`
+    * Accent: `#35D399` (강조색)
 * **타이포그래피:** 굵은 산세리프체(Inter, Montserrat 등)를 사용하여 기술적 자신감 표현.
+* **레이아웃:** 기본적으로 왼쪽 정렬
+* **헤더:** 스크롤 시 헤더가 안 보이면 고정 헤더가 강조색(#35D399)으로 약간 뒤에 비치는 정도의 효과
 
 ### 4.2. 핵심 프로젝트 (Key Projects)
 * **구성:** [문제 상황] → [분석/접근] → [기술적 해결] → [결과 수치].
@@ -40,9 +44,9 @@
     * **아트앤가이드:** 렌더링 비용 **92.7% 개선**, 행 선택 성능 **88% 향상** (AG Grid 도입).
     * **경매 솔루션:** API 응답 시간 **66% 단축**, 불필요 메모리 할당 **100% 제거** (Hybrid Paging).
 
-### 4.3. 기술 블로그 연동 (Writing & Documentation)
+### 4.3. Media 섹션 (Velog 연동)
 * **기능:** Velog(velog.io/@ooooohsu)의 RSS 또는 GraphQL API를 사용하여 최신 글 3~4개를 자동으로 불러옴.
-* **UI:** B&W 카드 레이아웃으로 제목, 요약문, 작성일 노출.
+* **UI:** 강조색(#35D399)을 활용한 카드 레이아웃으로 제목, 요약문, 작성일 노출.
 
 ### 4.4. 스마트 이력서 다운로드 (Impact Popup)
 * **기능:** '이력서 다운로드' 버튼 클릭 시, PDF 저장 전 핵심 역량을 요약한 모달 팝업 노출.
@@ -58,7 +62,8 @@
 * **프레임워크:** Next.js (App Router) - 빠른 초기 로딩과 SEO 보장.
 * **스타일링:** Tailwind CSS (미니멀한 B&W 테마 구현 최적화).
 * **성능 목표:** Lighthouse 점수 모든 항목 100점 (퍼포먼스 엔지니어로서의 살아있는 증거).
-* **인터랙션:** 블랙/화이트 반전(Invert) 효과를 활용한 호버(Hover) 애니메이션.
+* **인터랙션:** 강조색(#35D399)을 활용한 호버(Hover) 애니메이션.
+* **헤더 동작:** 스크롤 시 헤더가 안 보이면 고정 헤더가 강조색(#35D399)으로 약간 뒤에 비치는 효과 적용.
 
 ---
 
