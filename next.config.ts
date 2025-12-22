@@ -16,9 +16,6 @@ const nextConfig: NextConfig = {
     optimizeCss: true,
   },
   
-  // 프로덕션 빌드 최적화
-  swcMinify: true,
-  
   // 헤더 최적화
   async headers() {
     return [
