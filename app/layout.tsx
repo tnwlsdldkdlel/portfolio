@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import "./globals.css";
 
 const inter = Inter({
@@ -41,7 +43,11 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${montserrat.variable} antialiased`}
       >
-        {children}
+        <Header />
+        <main style={{ paddingTop: 'var(--header-height)' }}>
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
