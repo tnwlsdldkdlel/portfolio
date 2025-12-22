@@ -1,0 +1,72 @@
+name: CI/CD 파이프라인
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+# 중복 실행 방지 - 동일한 워크플로우가 실행 중이면 취소
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: 빌드, 테스트 및 Lighthouse 성능 감사
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Node.js 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 의존성 설치
+        run: npm ci
+
+      - name: ESLint 실행
+        run: npm run lint
+
+      - name: TypeScript 타입 체크
+        run: npx tsc --noEmit
+
+      - name: Next.js 빌드
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Next.js 서버 시작
+        run: |
+          npm start &
+          echo "Waiting for server to start..."
+          for i in {1..30}; do
+            if curl -f http://localhost:3000 > /dev/null 2>&1; then
+              echo "Server is ready!"
+              break
+            fi
+            echo "Waiting... ($i/30)"
+            sleep 2
+          done
+        env:
+          NODE_ENV: production
+          PORT: 3000
+
+      - name: Lighthouse CI 실행
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            http://localhost:3000
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          configPath: ./.lighthouserc.json
+
+      - name: Lighthouse 점수 확인
+        run: |
+          echo "Lighthouse audit completed. Check the artifacts for detailed reports."
+          echo "All categories must score 100/100 to pass."
+
