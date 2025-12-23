@@ -1,0 +1,46 @@
+[
+  {
+    "id": "jira-alarm",
+    "title": "Jira 알림",
+    "description": "Jira 멘션되거나 담당인 이슈들을 확인할 수 있는 웹 서비스",
+    "image": "/images/projects/jira-alarm.png",
+    "color": "#35D399",
+    "skills": ["Next.js", "Tailwind CSS", "TypeScript"],
+    "features": [
+      "Jira API 연동 (REST API)",
+      "실시간 이슈 폴링",
+      "로컬 스토리지 기반 설정 저장"
+    ],
+    "link": "https://velog.io/@ooooohsu/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-Jira-%EC%95%8C%EB%A6%BC"
+  },
+  {
+    "id": "github-issue-viewer",
+    "title": "GitHub Issue Viewer",
+    "description": "GitHub 이슈를 가상 스크롤로 표시하는 웹 서비스",
+    "image": "/images/projects/github-issue-viewer.png",
+    "color": "#a78bfa",
+    "skills": ["React", "Tailwind CSS", "TypeScript", "TanStack Table"],
+    "features": [
+      "가상스크롤 구현",
+      "대용량 데이터 처리",
+      "빠른 렌더링"
+    ],
+    "link": "https://velog.io/@ooooohsu/%EA%B0%80%EC%83%81-%EC%8A%A4%ED%81%AC%EB%A1%A4-Virtual-Scrolling"
+  },
+  {
+    "id": "realtime-crypto-dashboard",
+    "title": "실시간 암호화폐 대시보드",
+    "description": "실시간 암호화폐 시세를 표시하는 웹 서비스",
+    "image": "/images/projects/realtime-crypto-dashboard.png",
+    "color": "#60a5fa",
+    "skills": ["Next.js", "Tailwind CSS", "TypeScript", "Zustand", "TanStack Virtual"],
+    "features": [
+      "실시간 암호화폐 시세 표시",
+      "가상스크롤 구현",
+      "requestAnimationFrame",
+      "WebSocket의 오류처리 및 재연결 로직 구현"
+    ],
+    "link": "https://velog.io/@ooooohsu/Temp-Title"
+  }
+]
+
