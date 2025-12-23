@@ -100,15 +100,16 @@ export default function Header() {
                   <a
                     href={item.href}
                     onClick={(e) => handleNavClick(e, item.href)}
-                    className={`font-display text-[30px] font-bold transition-colors relative z-0 ${
+                    className={`font-display text-[30px] font-bold transition-colors relative z-0 focus-visible:outline-2 focus-visible:outline-[#35D399] focus-visible:outline-offset-2 focus-visible:rounded ${
                       activeSection === item.id
                         ? "text-black"
                         : "text-black hover:text-black"
                     }`}
+                    aria-current={activeSection === item.id ? "page" : undefined}
                   >
                     {item.label}
                     {activeSection === item.id && (
-                      <span className="absolute inset-0 bg-[#FDE68A] -z-10" style={{ transform: 'skewX(-12deg)' }}></span>
+                      <span className="absolute inset-0 bg-[#FDE68A] -z-10" style={{ transform: 'skewX(-12deg)' }} aria-hidden="true"></span>
                     )}
                   </a>
                 </li>
@@ -118,7 +119,8 @@ export default function Header() {
             {/* 오른쪽: Contact Me 버튼 */}
             <div className="hidden md:block">
               <button 
-                className="border-4 border-black font-display text-[30px] font-bold hover:bg-[#000000] hover:text-[#ffffff] transition-colors rounded-lg p-[5px]"
+                className="border-4 border-black font-display text-[30px] font-bold hover:bg-[#000000] hover:text-[#ffffff] transition-colors rounded-lg p-[5px] focus-visible:outline-2 focus-visible:outline-[#35D399] focus-visible:outline-offset-2"
+                aria-label="연락하기"
               >
                 Contact Me
               </button>
@@ -142,21 +144,25 @@ export default function Header() {
                   <a
                     href={item.href}
                     onClick={(e) => handleNavClick(e, item.href)}
-                    className={`block py-2 font-display text-lg font-bold transition-colors relative z-0 ${
+                    className={`block py-2 font-display text-lg font-bold transition-colors relative z-0 focus-visible:outline-2 focus-visible:outline-[#35D399] focus-visible:outline-offset-2 focus-visible:rounded ${
                       activeSection === item.id
                         ? "text-black"
                         : "text-black hover:text-[#35D399]"
                     }`}
+                    aria-current={activeSection === item.id ? "page" : undefined}
                   >
                     {item.label}
                     {activeSection === item.id && (
-                      <span className="absolute inset-0 bg-[#FDE68A] -z-10" style={{ transform: 'skewX(-12deg)' }}></span>
+                      <span className="absolute inset-0 bg-[#FDE68A] -z-10" style={{ transform: 'skewX(-12deg)' }} aria-hidden="true"></span>
                     )}
                   </a>
                 </li>
               ))}
               <li className="pt-2">
-                <button className="border-2 border-black px-6 py-3 font-display text-lg font-bold w-full hover:bg-[#35D399] hover:text-white transition-colors rounded-lg">
+                <button 
+                  className="border-2 border-black px-6 py-3 font-display text-lg font-bold w-full hover:bg-[#35D399] hover:text-white transition-colors rounded-lg focus-visible:outline-2 focus-visible:outline-[#35D399] focus-visible:outline-offset-2"
+                  aria-label="연락하기"
+                >
                   Contact Me
                 </button>
               </li>
@@ -183,15 +189,16 @@ export default function Header() {
                   <a
                     href={item.href}
                     onClick={(e) => handleNavClick(e, item.href)}
-                    className={`font-display text-[30px] font-bold transition-colors relative ${
+                    className={`font-display text-[30px] font-bold transition-colors relative focus-visible:outline-2 focus-visible:outline-[#35D399] focus-visible:outline-offset-2 focus-visible:rounded ${
                       activeSection === item.id
                         ? "text-black"
                         : "text-black hover:text-black"
                     }`}
+                    aria-current={activeSection === item.id ? "page" : undefined}
                   >
                     {item.label}
                     {activeSection === item.id && (
-                      <span className="absolute inset-0 bg-[#FDE68A] -z-10" style={{ transform: 'skewX(-12deg)' }}></span>
+                      <span className="absolute inset-0 bg-[#FDE68A] -z-10" style={{ transform: 'skewX(-12deg)' }} aria-hidden="true"></span>
                     )}
                   </a>
                 </li>
@@ -201,7 +208,8 @@ export default function Header() {
             {/* 오른쪽: Contact Me 버튼 */}
             <div className="hidden md:block">
               <button 
-                className="border-4 border-black font-display text-[30px] font-bold hover:bg-[#000000] hover:text-[#ffffff] transition-colors rounded-lg p-[5px]"
+                className="border-4 border-black font-display text-[30px] font-bold hover:bg-[#000000] hover:text-[#ffffff] transition-colors rounded-lg p-[5px] focus-visible:outline-2 focus-visible:outline-[#35D399] focus-visible:outline-offset-2"
+                aria-label="연락하기"
               >
                 Contact Me
               </button>
@@ -225,21 +233,25 @@ export default function Header() {
                   <a
                     href={item.href}
                     onClick={(e) => handleNavClick(e, item.href)}
-                    className={`block py-2 font-display text-lg font-bold transition-colors relative ${
+                    className={`block py-2 font-display text-lg font-bold transition-colors relative focus-visible:outline-2 focus-visible:outline-[#35D399] focus-visible:outline-offset-2 focus-visible:rounded ${
                       activeSection === item.id
                         ? "text-black"
                         : "text-black hover:text-[#35D399]"
                     }`}
+                    aria-current={activeSection === item.id ? "page" : undefined}
                   >
                     {item.label}
                     {activeSection === item.id && (
-                      <span className="absolute inset-0 bg-[#FDE68A] -z-10" style={{ transform: 'skewX(-12deg)' }}></span>
+                      <span className="absolute inset-0 bg-[#FDE68A] -z-10" style={{ transform: 'skewX(-12deg)' }} aria-hidden="true"></span>
                     )}
                   </a>
                 </li>
               ))}
               <li className="pt-2">
-                <button className="border-2 border-black px-6 py-3 font-display text-lg font-bold w-full hover:bg-[#35D399] hover:text-white transition-colors rounded-lg">
+                <button 
+                  className="border-2 border-black px-6 py-3 font-display text-lg font-bold w-full hover:bg-[#35D399] hover:text-white transition-colors rounded-lg focus-visible:outline-2 focus-visible:outline-[#35D399] focus-visible:outline-offset-2"
+                  aria-label="연락하기"
+                >
                   Contact Me
                 </button>
               </li>

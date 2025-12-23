@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import * as React from "react";
 import Image from "next/image";
 
 interface Project {
@@ -38,13 +39,53 @@ const getSkillColor = (skill: string): string => {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const modalRef = React.useRef<HTMLDivElement>(null);
+  const closeButtonRef = React.useRef<HTMLButtonElement>(null);
+
+  // 모달이 열릴 때 포커스 관리 및 ESC 키 처리
+  React.useEffect(() => {
+    if (isModalOpen) {
+      // 모달이 열릴 때 닫기 버튼에 포커스
+      closeButtonRef.current?.focus();
+      
+      const handleEscape = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          setIsModalOpen(false);
+        }
+      };
+      
+      document.addEventListener('keydown', handleEscape);
+      // 모달이 열릴 때 body 스크롤 방지
+      document.body.style.overflow = 'hidden';
+      
+      return () => {
+        document.removeEventListener('keydown', handleEscape);
+        document.body.style.overflow = 'unset';
+      };
+    }
+  }, [isModalOpen]);
+
+  const handleCardClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCardKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      setIsModalOpen(true);
+    }
+  };
 
   return (
     <>
       <div
-        onClick={() => setIsModalOpen(true)}
-        className="bg-white border-4 cursor-pointer transition-all duration-300 hover:-translate-y-2 rounded-lg overflow-hidden"
+        role="button"
+        tabIndex={0}
+        onClick={handleCardClick}
+        onKeyDown={handleCardKeyDown}
+        className="bg-white border-4 cursor-pointer transition-all duration-300 hover:-translate-y-2 rounded-lg overflow-hidden focus-visible:outline-2 focus-visible:outline-[#35D399] focus-visible:outline-offset-2"
         style={{ borderRadius: '15px' }}
+        aria-label={`${project.title} 프로젝트 상세 보기`}
       >
         {/* 프로젝트 이미지 */}
         <div className="relative w-full h-60">
@@ -69,19 +110,25 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
           onClick={() => setIsModalOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
         >
           <div
+            ref={modalRef}
             className="bg-white border-4 border-black max-w-2xl w-full mx-4 max-h-[90vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
             style={{ borderRadius: '15px' }}
+            role="document"
           >
             {/* 헤더 영역 (고정) */}
             <div className="flex justify-between items-start p-8 pb-6 border-b border-gray-200">
-              <h2 className="font-display text-3xl font-bold">{project.title}</h2>
+              <h2 id="modal-title" className="font-display text-3xl font-bold">{project.title}</h2>
               <button
+                ref={closeButtonRef}
                 onClick={() => setIsModalOpen(false)}
-                className="text-2xl font-bold hover:text-[#35D399] transition-colors"
-                aria-label="닫기"
+                className="text-2xl font-bold hover:text-[#35D399] transition-colors focus-visible:outline-2 focus-visible:outline-[#35D399] focus-visible:outline-offset-2 focus-visible:rounded"
+                aria-label="모달 닫기"
                 style={{ cursor: 'pointer' }}
               >
                 ✕
@@ -134,7 +181,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                   href={project.link} 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-blue-500 hover:text-blue-700 break-words break-all"
+                  className="text-blue-500 hover:text-blue-700 break-words break-all focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2 focus-visible:rounded"
+                  aria-label={`${project.title} 프로젝트 링크 (새 창에서 열림)`}
                 >
                   {project.link}
                 </a>
