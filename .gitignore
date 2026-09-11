@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 폰트 원본 (scripts/subset-fonts.py 가 자동으로 내려받는다)
+.fonts-src/
+docs/
+CLAUDE.md
+AGENTS.md
