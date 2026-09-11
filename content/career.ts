@@ -3,11 +3,23 @@
  * 전화번호와 상세 주소는 공개 사이트에 싣지 않는다 — 메일로 받는 편이 안전하다.
  */
 export const contact = {
-  email: "ooooohsu@icloud.com",
+  email: "tnwls2dkdlel@gmail.com",
   github: "https://github.com/tnwlsdldkdlel",
   blog: "https://velog.io/@ooooohsu/posts",
   location: "서울",
 };
+
+/**
+ * About 섹션의 인적사항 — 출처는 `docs/resume-2025.pdf`.
+ * 전화번호·상세 주소는 여기에도 두지 않는다(위 주석 참고).
+ */
+export const personal = [
+  { key: "이름", value: "오수진 · OH SU JIN" },
+  { key: "경력", value: "개발 6년차 · 프론트엔드 2023 –" },
+  { key: "거주", value: "서울 강남구" },
+  { key: "학력", value: "강남대학교 전자공학과 학사" },
+  { key: "메일", value: contact.email, href: `mailto:${contact.email}` },
+];
 
 /** 히어로에 세우는 핵심 스택 — 여섯 개만. 나머지는 경력 섹션에 있다. */
 export const coreStack = [

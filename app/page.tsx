@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { colophon, profile } from "@/content/profile";
+import { personal } from "@/content/career";
 import { featuredProjects, projects } from "@/content/projects";
 import { Career } from "@/components/Career";
 import { HeroFacts } from "@/components/HeroFacts";
 import { Kicker } from "@/components/Kicker";
+import { PrincipleIcon } from "@/components/PrincipleIcon";
 import { ProjectRow } from "@/components/ProjectRow";
 import { Readout } from "@/components/Readout";
 import { SkillLine } from "@/components/SkillLine";
@@ -57,19 +59,36 @@ export default function Home() {
       <section className="section shell" data-reveal="" id="about">
         <Kicker>01 — About me</Kicker>
 
-        <p className="h2" style={{ maxWidth: "24ch" }}>
-          만드는 것보다 재는 것을 먼저 합니다.
-        </p>
-
-        <div className="prose" style={{ maxWidth: "68ch", marginTop: "2rem" }}>
-          <p style={{ fontSize: "1.08rem", color: "var(--ink)" }}>
-            {profile.intro}
-          </p>
-          {profile.about.map((para, i) => (
-            <p key={i} style={{ color: "var(--ink-2)", marginTop: "1.35em" }}>
-              {para}
+        <div className="about">
+          <div>
+            <p className="h2">
+              <span className="about__mark">{profile.headline}</span>
             </p>
-          ))}
+            <p className="about__lede">{profile.intro}</p>
+          </div>
+
+          <dl className="bio">
+            {personal.map((item) => (
+              <div className="bio__row" key={item.key}>
+                <dt>{item.key}</dt>
+                <dd>
+                  {item.href ? <a href={item.href}>{item.value}</a> : item.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+
+          <ul className="principles">
+            {profile.about.map((item) => (
+              <li className="principle" key={item.title}>
+                <h3 className="principle__title">
+                  <PrincipleIcon name={item.icon} />
+                  {item.title}
+                </h3>
+                <p className="principle__body">{item.body}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -126,12 +145,12 @@ export default function Home() {
             className="readout__note"
             style={{ marginTop: "1rem", maxWidth: "62ch" }}
           >
-            본문 서체는 Pretendard 두 벌뿐이고, 원본 1,520KB를 실제로 쓰인 715자만
-            남겨 122KB로 줄였습니다. 첫 화면의 &ldquo;Hello!&rdquo;에 쓴 디스플레이
+            본문 서체는 Pretendard 두 벌뿐이고, 원본 1,536KB를 실제로 쓰인 726자만
+            남겨 124KB로 줄였습니다. 첫 화면의 &ldquo;Hello!&rdquo;에 쓴 디스플레이
             서체도 그 여섯 글자만 남겨 15.6KB → 1.1KB입니다(서브셋 스크립트는
             저장소에 함께 뒀습니다). 장식은 전부 CSS이고 이미지는 한 장도 없습니다 —
             목록의 막대도 스크린샷이 아니라 그 프로젝트의 측정값에서 그린 것입니다.
-            JS 174KB 중 직접 쓴 건 38줄뿐입니다 — 섹션이 화면에
+            JS 150KB 중 직접 쓴 건 38줄뿐입니다 — 섹션이 화면에
             들어오는 걸 감지해 등장 애니메이션을 트는 관찰자 하나입니다. 나머지는
             전부 Next 런타임 몫이고, 프레임워크를 고른 비용이라 숨기지 않고 적어
             둡니다.
