@@ -42,8 +42,9 @@ next-env.d.ts
 
 # 폰트 원본 (scripts/subset-fonts.py 가 자동으로 내려받는다)
 .fonts-src/
-docs/
-HANDOFF.md
+
+# 로컬 전용 문서 (README.md 는 예외로 커밋한다)
 CLAUDE.md
 AGENTS.md
-CLAUDE.md
+HANDOFF.md
+docs/
