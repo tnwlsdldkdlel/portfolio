@@ -474,8 +474,7 @@ export const projects: Project[] = [
     team: "백엔드 1 · 프론트 1(본인)",
     period: "2026.06 – 2026.07",
     status: "운영 중",
-    url: "https://mds.mplanit.co.kr",
-    urlLabel: "mds.mplanit.co.kr",
+    urlNote: "사내 도구",
     stack: [
       "Next.js",
       "TypeScript",
@@ -708,8 +707,7 @@ export const projects: Project[] = [
     team: "백엔드 1 · 프론트 1(본인)",
     period: "2026.08 – 진행 중",
     status: "진행 중",
-    url: "https://aia.mplanit.co.kr",
-    urlLabel: "aia.mplanit.co.kr",
+    urlNote: "링크 비공개",
     stack: ["HTML", "Vanilla CSS", "JavaScript", "AWS S3", "CodeBuild"],
     keywords: ["멀티 브랜드", "반응형", "디자인 토큰", "퍼블리싱"],
     metrics: [
@@ -793,8 +791,7 @@ export const projects: Project[] = [
     team: "백엔드 1 · 프론트 1(본인)",
     period: "2026.06 – 2026.08",
     status: "운영 중",
-    url: "https://banner-fit.mplanit.co.kr",
-    urlLabel: "banner-fit.mplanit.co.kr",
+    urlNote: "사내 도구",
     stack: ["TypeScript", "Canvas API", "멀티페이지", "디자인 토큰"],
     keywords: ["AI 생성", "Canvas 합성", "이탈 방지", "브라우저 호환성"],
     metrics: [
