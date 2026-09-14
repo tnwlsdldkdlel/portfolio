@@ -51,16 +51,16 @@ export type Highlight = {
 export const projects: Project[] = [
   {
     slug: "soksok",
-    about: "통신상품을 비교하고 상담을 신청하는 사이트",
+    about: "통신 상품을 비교하고 상담을 신청하는 사이트.",
     audience: "외부 서비스",
     name: "쏙쏙 컴퍼니",
     tagline:
-      "랜딩으로 만들다 서비스가 된 사이트. 데이터 페칭 시점을 색인 기준으로 가르고, SEO 불변식을 커밋 훅에 걸었다.",
+      "랜딩으로 시작해 서비스가 된 사이트. 데이터 페칭 시점을 색인 기준으로 가르고, SEO 불변식을 커밋 훅에 걸었다.",
     summary:
       "통신 상품 비교 사이트라 검색 유입이 곧 상담 신청이다. SEO를 이 프로젝트의 설계 축으로 잡고, API 응답이 메타·구조화 데이터에 프리렌더되도록 빌드타임 fetch를 택했다. 폴백은 전부 걷어내 API가 깨지면 빌드가 실패하게 했다 — 틀린 메타가 배포되느니 직전 배포본이 그대로 남는 편이 낫다.",
     role: "프론트엔드 전담, SEO 게이트, 성능 최적화, 배포 파이프라인",
     team: "백엔드 1 · 프론트 1(본인) · 디자이너 1",
-    period: "2026.06 – 진행중",
+    period: "2026.06 – 진행 중",
     status: "운영 중",
     url: "https://soksokcompany.com",
     urlLabel: "soksokcompany.com",
@@ -147,7 +147,7 @@ export const projects: Project[] = [
               "색인 대상(FAQ·GNB·요금제) → RSC 빌드타임 fetch로 HTML·JSON-LD에 프리렌더",
               "실시간 데이터(상담·방문 로그) → 클라이언트 런타임 분리",
               "가격 하이브리드는 JSON-LD가 빌드 값이라 화면과 구조화 데이터가 어긋나 기각. 신선도는 재배포 훅으로 처리",
-              "Schema-First 방식으로 프론트가 API 계약 7종 선정의, zod로 응답 1:1 미러링",
+              "Schema-First — API 스펙을 프론트가 먼저 작성해 백엔드에 전달(데이터 계약 7종), zod로 응답을 1:1 미러링",
             ],
           },
           {
@@ -197,7 +197,7 @@ export const projects: Project[] = [
           {
             label: "문제",
             items: [
-              "빌드 중단 방지용 하드코딩 폴백 운용 중 FAQ 문구가 API와 분기된 것을 발견",
+              "빌드 중단 방지용 하드코딩 폴백을 두고 있었는데, FAQ 문구가 이미 분기된 것을 발견 — API에서 빠진 단어(가입)가 폴백에만 남아 있었다",
               "빌드타임 전용 fetch라 폴백은 장애 방어가 아니라 스테일 데이터 배포 경로였음",
             ],
           },
@@ -237,7 +237,7 @@ export const projects: Project[] = [
           {
             label: "성과",
             items: [
-              "커닝 보존 비용 weight당 3.8KB로 원본 대비 픽셀 차이 0",
+              "커닝 보존 비용은 weight당 3.8KB · 원본 대비 픽셀 차이 0",
             ],
             metricLabels: [
               "웹폰트 전송량",
