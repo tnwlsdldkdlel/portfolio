@@ -15,8 +15,8 @@ export default function NotFound() {
         주소가 바뀌었거나 아직 쓰이지 않은 페이지입니다.
       </p>
       <p style={{ marginTop: "2rem" }}> 
-        <Link href="/projects" className="link-out">
-          전체 기록으로 →
+        <Link href="/#projects" className="link-out">
+          프로젝트 목록으로 →
         </Link>
       </p>
     </section>

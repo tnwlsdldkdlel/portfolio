@@ -106,7 +106,8 @@ const jsonLd = {
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+  modal,
+}: Readonly<{ children: React.ReactNode; modal: React.ReactNode }>) {
   return (
     <html lang="ko" className={`${pretendard.variable} ${display.variable}`}>
       <body>
@@ -130,7 +131,7 @@ export default function RootLayout({
             <nav className="masthead__nav" aria-label="주요">
               <Link href="/#about">About</Link>
               <Link href="/#skills">Skills</Link>
-              <Link href="/projects">Projects</Link>
+              <Link href="/#projects">Projects</Link>
               <Link href="/#career">Career</Link>
             </nav>
           </div>
@@ -138,6 +139,7 @@ export default function RootLayout({
         </header>
 
         <main id="main">{children}</main>
+        {modal}
 
         <Reveal />
 

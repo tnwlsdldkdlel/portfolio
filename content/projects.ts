@@ -10,16 +10,25 @@ export type Project = {
   slug: string;
   name: string;
   tagline: string;
+  /** 이 서비스가 무엇인가 — 내가 한 일(tagline)과 섞지 않는다. */
+  about: string;
   summary: string;
   role: string;
+  /** 이 프로젝트에 붙은 인원 — 기여 경계를 읽는 사람이 가늠할 수 있게. */
+  team: string;
   period: string;
   status: "운영 중" | "진행 중" | "완료" | "PoC";
+  /** 누가 쓰는 물건인가 — 카드 뱃지로 나간다. */
+  audience: "외부 서비스" | "사내 서비스";
   url?: string;
   urlLabel?: string;
   urlNote?: string;
+  ogImage?: string;
   stack: string[];
   keywords: string[];
   featured?: boolean;
+  /** 광고주 퍼블리싱 카드 한 장에 합쳐 넣는 건 — 개별 카드로 세우지 않는다. */
+  publishing?: boolean;
   metrics?: Metric[];
   highlights: { title: string; body: string }[];
 };
@@ -27,16 +36,20 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "soksok",
-    name: "쏙쏙 공식 사이트",
+    about: "통신상품을 비교하고 상담을 신청하는 사이트",
+    audience: "외부 서비스",
+    name: "쏙쏙 컴퍼니",
     tagline:
       "Astro로 만들어진 통신·가전 비교 사이트를 Next.js로 옮기고, 웹폰트를 정밀 서브셋해 전송량을 절반으로 줄였다.",
     summary:
       "8개 라우트 전체를 Astro에서 Next.js App Router(정적 익스포트)로 이전하면서 JSON-LD·SEO·유입 통계를 동등하게 재현했다. 이전 자체보다 어려웠던 건 '바뀌지 않았음'을 증명하는 쪽이었다 — 라우트별 HTML 바이트 비교와 시각 회귀 스냅샷으로 픽셀 동일성을 게이트에 걸었다. 그다음 웹폰트를 실제 사용 글리프만 남겨 서브셋했다.",
     role: "프론트엔드 전담 · 마이그레이션 설계, 퍼블리싱, 성능 최적화, 배포 파이프라인",
-    period: "2026.06 – 2026.08",
+    team: "백엔드 1 · 프론트 1(본인) · 디자이너 1",
+    period: "2026.06 – 진행중",
     status: "운영 중",
     url: "https://soksokcompany.com",
     urlLabel: "soksokcompany.com",
+    ogImage: "/og/soksok.png",
     stack: [
       "Next.js 15",
       "App Router",
@@ -109,16 +122,20 @@ export const projects: Project[] = [
   },
   {
     slug: "dd-da",
+    about: "숙소·여행 정보를 나누는 커뮤니티형 서비스.",
+    audience: "외부 서비스",
     name: "dd-da",
     tagline:
       "전송량 20.3MB에 LCP 99.6초였던 서비스를 1.54MB · CLS 0.000으로 되돌렸다.",
     summary:
       "커뮤니티형 서비스의 프론트 성능과 SEO를 전담했다. Lighthouse Performance 49에 LCP가 99.6초로 찍혔는데 TBT도 서버 응답도 멀쩡했다 — 메인스레드 문제도 레이아웃 시프트도 아닌 순수 대역폭 문제였다. 배경 이미지 한 장이 13.3MB였다.",
     role: "프론트엔드 전담 · 성능 진단·최적화, SEO 기반 구축, 도메인 이전",
+    team: "백엔드 1 · 프론트 1(본인)",
     period: "2026.03 – 2026.08",
     status: "운영 중",
     url: "https://dd-da.co.kr",
     urlLabel: "dd-da.co.kr",
+    ogImage: "/og/dd-da.png",
     stack: [
       "Next.js",
       "App Router",
@@ -196,11 +213,14 @@ export const projects: Project[] = [
   },
   {
     slug: "lab-dashboard",
+    about: "커밋 이력과 태스크 데이터를 묶어 보여주는 사내 대시보드.",
+    audience: "사내 서비스",
     name: "Lab Dashboard",
     tagline: "Lighthouse 100점짜리 화면에서 전송량의 87%가 20px 아바타였다.",
     summary:
       "커밋 이력과 태스크 데이터를 묶어 보여주는 사내 대시보드. 수집 파이프라인부터 화면·배포까지 전담했다. 성능 점수는 모바일·데스크톱 모두 100점이었지만, 점수가 문제를 가리고 있었다.",
     role: "설계 · 프론트엔드 · 수집 파이프라인 · 배포 전담",
+    team: "백엔드 1 · 프론트 1(본인)",
     period: "2026.08",
     status: "운영 중",
     urlNote: "사내망 전용 — 외부 접근 불가",
@@ -256,16 +276,20 @@ export const projects: Project[] = [
   },
   {
     slug: "geo-metric-care",
+    about: "URL 하나를 넣으면 SEO·GEO를 진단해 PDF 리포트를 메일로 보내는 서비스.",
+    audience: "외부 서비스",
     name: "GEO METRIC CARE",
     tagline:
       "URL 하나를 넣으면 SEO·GEO를 진단해 PDF 리포트를 메일로 보내는 서비스.",
     summary:
       "URL 입력부터 크롤링·분석·PDF 생성·메일 발송까지의 파이프라인을 프론트와 함께 만들었다. 외부 URL을 받아 서버에서 크롤링하는 구조라 SSRF 방어와 개인정보 암호화가 기능만큼 중요했다.",
     role: "프론트엔드 · 분석 파이프라인 · 리포트 생성",
+    team: "백엔드 1 · 프론트 1(본인)",
     period: "2026.03 – 2026.06",
     status: "운영 중",
     url: "https://geo.mplanit.co.kr",
     urlLabel: "geo.mplanit.co.kr",
+    ogImage: "/og/geo-metric-care.png",
     stack: [
       "Next.js 15",
       "React 19",
@@ -308,12 +332,15 @@ export const projects: Project[] = [
   },
   {
     slug: "mds",
+    about: "URL이나 Figma 디자인 시스템에서 토큰을 뽑아 문서 디자인 시스템을 만드는 도구.",
+    audience: "사내 서비스",
     name: "MDS",
     tagline:
       "URL이나 Figma 디자인 시스템에서 토큰을 추출해 문서 디자인 시스템으로 만든다.",
     summary:
       "두 축으로 움직이는 서비스다. URL을 넣으면 문서 디자인 시스템과 가이드 프레임을 뽑아내고, Figma 디자인 시스템에서는 토큰을 추출해 광고주별로 바인딩한다. 플러그인과 서버가 계약을 공유하는 구조라 버전 불일치가 가장 큰 위험이었다.",
     role: "프론트엔드 · Figma 플러그인 · 추출 파이프라인 · 배포",
+    team: "백엔드 1 · 프론트 1(본인)",
     period: "2026.06 – 2026.07",
     status: "운영 중",
     url: "https://mds.mplanit.co.kr",
@@ -371,12 +398,15 @@ export const projects: Project[] = [
   },
   {
     slug: "ai-lab",
+    about: "여러 AI 서비스 모듈을 한 콘솔에서 운영·정산·조회하는 사내 플랫폼.",
+    audience: "사내 서비스",
     name: "AI-LAB 통합 콘솔",
     tagline:
       "여러 AI 서비스 모듈을 한 콘솔에서 운영·정산·조회하는 사내 플랫폼 프론트엔드.",
     summary:
       "트래킹 SDK, GEO 지표, 디자인 시스템, 배너 생성, 릴스 스튜디오, 챗봇까지 서로 다른 모듈을 하나의 콘솔에 얹었다. 모듈마다 인증 방식과 데이터 모델이 달라서, 공통 레이어를 어디까지 끌어올릴지가 계속되는 판단이었다.",
     role: "프론트엔드 전담 · 6개월 연속 개발 (핸드오프 로그 39건)",
+    team: "백엔드 1 · 프론트 1(본인)",
     period: "2026.03 – 진행 중",
     status: "진행 중",
     urlNote: "사내 운영 콘솔",
@@ -426,13 +456,17 @@ export const projects: Project[] = [
     ],
   },
   {
+    publishing: true,
     slug: "pass",
+    about: "통신 3사 딥링크와 이벤트 응모를 붙인 캠페인 랜딩 페이지.",
+    audience: "외부 서비스",
     name: "PASS 캠페인 랜딩",
     tagline:
       "통신 3사 딥링크와 이벤트 응모를 붙인 캠페인 랜딩. 폰트·이미지·캐시를 처음부터 설계했다.",
     summary:
       "정적 호스팅 + CDN으로 배포한 캠페인 페이지. 짧은 기간에 트래픽이 몰리는 성격이라 첫 로드가 전부였고, 폰트 자체 호스팅과 장기 캐시 헤더를 처음부터 깔고 갔다.",
     role: "퍼블리싱 · 성능 · 배포 · API 연동 전담",
+    team: "백엔드 1 · 프론트 1(본인)",
     period: "2026.08",
     status: "운영 중",
     url: "https://pass.mplanit.co.kr",
@@ -479,12 +513,15 @@ export const projects: Project[] = [
   },
   {
     slug: "soksok-admin",
+    about: "상담 신청·광고 통계·관리자 관리를 다루는 운영 어드민.",
+    audience: "사내 서비스",
     name: "쏙쏙 Admin",
     tagline:
       "Figma 시안 그대로 퍼블리싱한 운영 어드민. 도메인별 구조로 화면이 늘어도 흩어지지 않게.",
     summary:
       "상담 신청·광고 통계·관리자 관리를 다루는 운영 어드민. 디자인 토큰과 CSS Modules로 시안을 그대로 옮기되, 폴더 구조는 타입이 아니라 도메인 기준으로 잡았다.",
     role: "프론트엔드 전담 · 퍼블리싱 · API 연동 · 배포",
+    team: "백엔드 1 · 프론트 1(본인)",
     period: "2026.07",
     status: "운영 중",
     urlNote: "운영자 전용",
@@ -527,13 +564,17 @@ export const projects: Project[] = [
     ],
   },
   {
+    publishing: true,
     slug: "aia",
+    about: "암·치아·치매·종합건강 4개 보험 상품의 서브브랜드 상품 페이지.",
+    audience: "외부 서비스",
     name: "보험 상품 서브브랜딩",
     tagline:
       "하나의 코드베이스에서 두 개의 서브브랜드를, 데이터 속성 하나로 갈라 낸다.",
     summary:
       "암·치아·치매·종합건강 4개 상품 페이지를 A안·B안 두 벌씩, 총 8벌 퍼블리싱했다. 브랜드가 둘이지만 구조는 같아서, 리포지토리 구조를 배포 버킷 구조와 일치시키고 브랜드 차이는 속성 하나로만 분기했다.",
     role: "퍼블리싱 전담 · 반응형 · 배포 파이프라인",
+    team: "백엔드 1 · 프론트 1(본인)",
     period: "2026.08 – 진행 중",
     status: "진행 중",
     url: "https://aia.mplanit.co.kr",
@@ -566,11 +607,14 @@ export const projects: Project[] = [
   },
   {
     slug: "chat-widget",
+    about: "외부 사이트에 스크립트 한 줄로 붙는 임베드형 챗 위젯.",
+    audience: "외부 서비스",
     name: "임베드 챗 위젯",
     tagline: "남의 사이트 위에 얹히는 위젯. 좌표계와 모바일 키보드가 전부였다.",
     summary:
       "외부 사이트에 스크립트 한 줄로 붙는 챗 위젯. 어떤 페이지에 얹힐지 모르기 때문에 좌표 계산과 스크롤 간섭 방지가 기능보다 중요했다.",
     role: "프론트엔드 전담 · 위젯 코어 · 배포 파이프라인",
+    team: "백엔드 1 · 프론트 1(본인)",
     period: "2026.08",
     status: "운영 중",
     urlNote: "외부 사이트 임베드형",
@@ -607,12 +651,15 @@ export const projects: Project[] = [
   },
   {
     slug: "banner-fit",
+    about: "프롬프트와 상품 이미지로 배너 크리에이티브를 만들고 규격별로 리사이즈하는 사내 도구.",
+    audience: "사내 서비스",
     name: "Banner Fit",
     tagline:
       "AI로 광고 크리에이티브를 만들고, 로고를 얹고, 사이즈를 변형하는 생성 도구.",
     summary:
       "프롬프트와 상품 이미지로 배너 크리에이티브를 생성하고, 캔버스로 로고를 합성한 뒤 여러 규격으로 리사이즈하는 도구. 생성 결과를 잃는 것이 가장 큰 사고라 이탈 경고와 비율 유지에 공을 들였다.",
     role: "프론트엔드 전담 · 생성 플로우 · 캔버스 합성",
+    team: "백엔드 1 · 프론트 1(본인)",
     period: "2026.06 – 2026.08",
     status: "운영 중",
     url: "https://banner-fit.mplanit.co.kr",
@@ -637,12 +684,15 @@ export const projects: Project[] = [
   },
   {
     slug: "geo-pulse",
+    about: "AI 검색 답변에서 브랜드가 얼마나 인용되는지 재는 점유율 측정 파이프라인.",
+    audience: "사내 서비스",
     name: "GEO-Pulse",
     tagline:
       "AI 검색 답변에서 우리 브랜드가 얼마나 인용되는지 측정하는 파이프라인.",
     summary:
       "생성형 검색 시대의 점유율(SOV)을 재는 실험. 키워드에서 프롬프트 변형을 만들고, AI 답변을 받아 인용된 출처를 집계해 경쟁사와 비교한다. 자사 측정 결과는 0.0%였고, 그 0%가 곧 제품의 근거가 됐다.",
     role: "기획 · 파이프라인 · 대시보드 전담",
+    team: "백엔드 1 · 프론트 1(본인)",
     period: "2026.05",
     status: "PoC",
     urlNote: "내부 PoC",
@@ -679,11 +729,14 @@ export const projects: Project[] = [
   },
   {
     slug: "publishing-dashboard",
+    about: "퍼블리싱 산출물을 로컬에서 바로 띄워보는 사내 도구.",
+    audience: "사내 서비스",
     name: "퍼블리싱 미리보기 대시보드",
     tagline: "의존성 0개, 단일 파일. 팀에는 실행 파일 하나만 전달한다.",
     summary:
       "퍼블리싱 산출물을 로컬에서 바로 띄워보는 사내 도구. 받는 사람이 개발자가 아닐 수 있어서, 설치 절차를 없애는 것이 기능보다 우선이었다.",
     role: "설계 · 구현 · 배포 전담",
+    team: "백엔드 1 · 프론트 1(본인)",
     period: "2026.06 – 2026.08",
     status: "운영 중",
     urlNote: "로컬 실행 도구",
@@ -716,12 +769,15 @@ export const projects: Project[] = [
   },
   {
     slug: "lp-platform",
+    about: "랜딩페이지를 섹션 단위로 조립하는 사내 빌더.",
+    audience: "사내 서비스",
     name: "LP Platform",
     tagline:
       "설정 JSON으로 레이아웃을 그리던 엔진을 폐기하고, 섹션 컴포넌트로 되돌렸다.",
     summary:
       "랜딩페이지를 섹션 단위로 조립하는 빌더. 처음엔 HTML/설정 기반 레이아웃 엔진이었는데, 표현할 수 있는 것보다 설명해야 할 규칙이 빠르게 많아져서 React 섹션 컴포넌트 + 디자인 토큰 구조로 전면 교체했다.",
     role: "프론트엔드 · 에디터 · 렌더러 설계",
+    team: "백엔드 1 · 프론트 1(본인)",
     period: "2026.04",
     status: "완료",
     urlNote: "사내 빌더",
@@ -754,7 +810,16 @@ export const projects: Project[] = [
   },
 ];
 
-export const featuredProjects = projects.filter((p) => p.featured);
+/** 개별 카드로 세울 건은 아니지만 실제로 맡았던 퍼블리싱 광고주 — 카드 한 장에 모아 쓴다. */
+export const publishingClients = [
+  "AIA생명",
+  "PASS (통신 3사)",
+  "웰컴금융",
+  "쏙쏙컴퍼니",
+  "엠플랜잇",
+];
+
+export const cardProjects = projects.filter((p) => !p.publishing);
 
 export function getProject(slug: string) {
   return projects.find((p) => p.slug === slug);

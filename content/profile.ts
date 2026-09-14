@@ -53,41 +53,42 @@ export const profile = {
     "접근성",
     "CDN · 캐시 전략",
   ],
+  // 각 항목은 `주제 — 근거` 형태로 통일한다. 화면에서 " — " 앞뒤를 나눠 굵기를 준다.
+  // 도구 이름은 여기 적지 않는다 — 아래 skills(career.ts) 한 곳에만 둔다.
   capabilities: [
     {
       title: "웹 성능 최적화",
       items: [
-        "Core Web Vitals 진단 — LCP 단계 분해, CLS 원인 추적, TBT·TTFB 계측",
-        "전송 바이트 감축 — 이미지 파이프라인, 웹폰트 서브셋, 번들 예산 게이트",
-        "캐시 전략 — immutable 장기 캐시, 캐시 버스팅, CDN 무효화 한계 파악",
-        "통제된 A/B 측정 설계 — 외부 변수 차단, 반복 측정, 편차 범위 명시",
+        "Core Web Vitals 진단 — LCP 단계 분해 · CLS 원인 추적 · TBT·TTFB 계측",
+        "전송 바이트 감축 — 이미지 파이프라인 · 웹폰트 서브셋 · 번들 예산 게이트",
+        "캐시 전략 — immutable 장기 캐시 · 캐시 버스팅 · CDN 무효화 한계 파악",
+        "통제된 A/B 측정 설계 — 외부 변수 차단 · 반복 측정 · 편차 범위 명시",
       ],
     },
     {
       title: "퍼블리싱 · 마크업",
       items: [
         "Figma 시안 픽셀 재현 — 시각 회귀 스냅샷으로 동일성 검증",
-        "반응형 — 중간 해상도 경계까지 실측, 태블릿·모바일 분기점 설계",
-        "디자인 토큰 · CSS Modules · 멀티 브랜드 분기",
-        "접근성 기본 — 시맨틱 마크업, 키보드 조작, 대비",
+        "반응형 — 중간 해상도 경계까지 실측 · 태블릿·모바일 분기점 설계",
+        "디자인 토큰 — CSS Modules · 멀티 브랜드 분기",
+        "접근성 기본 — 시맨틱 마크업 · 키보드 조작 · 대비",
       ],
     },
     {
       title: "SEO · GEO",
       items: [
-        "메타·canonical·sitemap·robots를 상수 한 곳에서 파생",
-        "JSON-LD 구조화 데이터 — Organization, WebSite, CreativeWork",
-        "도메인 이전과 색인 관리, ISR 캐시로 인한 메타 미갱신 대응",
-        "생성형 검색 인용 점유율(SOV) 측정 파이프라인 구축 경험",
+        "메타 파생 — canonical·sitemap·robots를 상수 한 곳에서",
+        "JSON-LD 구조화 데이터 — Organization · WebSite · CreativeWork",
+        "색인 관리 — 도메인 이전 · ISR 캐시로 인한 메타 미갱신 대응",
+        "생성형 검색 — 인용 점유율(SOV) 측정 파이프라인 구축",
       ],
     },
     {
       title: "프레임워크 · 인프라",
       items: [
-        "Next.js App Router — RSC, 정적 익스포트, ISR, 메타데이터 API",
-        "React 19 · TypeScript strict · Zustand · TanStack Query · Zod",
-        "Astro → Next.js 마이그레이션, 동등성 검증 게이트 설계",
-        "AWS S3 · CloudFront · Amplify · CodeBuild 기반 배포 파이프라인",
+        "Next.js App Router — RSC · 정적 익스포트 · ISR · 메타데이터 API",
+        "Astro → Next.js 마이그레이션 — 동등성 검증 게이트 설계",
+        "배포 파이프라인 — 정적 호스팅 · CDN 무효화 · 빌드 자동화",
       ],
     },
   ],
@@ -95,26 +96,26 @@ export const profile = {
 
 /** 이 사이트 자체의 측정값 — 로컬 프로덕션 빌드(next start) · brotli 압축 기준 실측. */
 export const colophon = {
-  measuredAt: "2026-09-11",
+  measuredAt: "2026-09-14",
   condition: "next build → next start · brotli · 첫 방문(캐시 없음) · 1440×1000",
   items: [
     {
       label: "첫 화면 전송량",
-      value: "291KB",
-      note: "HTML 12.8 · CSS 4.1 · JS 150 · 폰트 124",
+      value: "298KB",
+      note: "HTML 12.1 · CSS 5.0 · JS 155 · 폰트 126 · 카드 이미지는 지연 로드",
     },
     {
       label: "웹폰트",
-      value: "124KB",
-      note: "Pretendard 2벌 + 인사말용 1벌 · 원본 1,536KB에서 −91.9%",
+      value: "125KB",
+      note: "Pretendard 2벌 + 인사말용 1벌 · 원본 1,536KB에서 −91.8%",
     },
     {
       label: "JavaScript",
-      value: "150KB",
-      note: "직접 쓴 건 38줄(화면 진입 감지) · 나머지는 Next 런타임",
+      value: "155KB",
+      note: "직접 쓴 건 82줄(진입 감지 · 뒤로가기 · 상세 팝업) · 나머지는 Next 런타임",
     },
-    { label: "CSS", value: "4.1KB", note: "파일 1개 · 이미지 0장" },
-    { label: "CLS", value: "0", note: "이미지가 없어 레이아웃이 밀릴 일이 없다" },
-    { label: "클라이언트 컴포넌트", value: "1개", note: "등장 애니메이션 관찰자 · 나머지는 서버 렌더" },
+    { label: "CSS", value: "5.0KB", note: "파일 1개 · 장식은 전부 CSS" },
+    { label: "CLS", value: "0", note: "카드 이미지에 크기를 박아 자리를 먼저 잡는다" },
+    { label: "클라이언트 컴포넌트", value: "3개", note: "등장 관찰자 · 뒤로가기 · 상세 팝업 · 나머지는 서버 렌더" },
   ],
 };
