@@ -30,7 +30,22 @@ export type Project = {
   /** 광고주 퍼블리싱 카드 한 장에 합쳐 넣는 건 — 개별 카드로 세우지 않는다. */
   publishing?: boolean;
   metrics?: Metric[];
-  highlights: { title: string; body: string }[];
+  highlights: Highlight[];
+};
+
+/**
+ * 근거 한 덩어리. 문단형(`body`)은 문장 단위 불릿으로 쪼개 렌더하고,
+ * 단계가 뚜렷한 건은 `steps` 로 라벨을 붙여 훑게 한다. 둘 중 하나만 쓴다.
+ */
+export type Highlight = {
+  title: string;
+  body?: string;
+  /**
+   * 라벨은 5자 이내. 화면에서 고정 폭 열을 차지한다.
+   * `metricLabels` 는 `metrics` 의 `label` 을 가리켜 그 줄 아래 불릿으로 붙는다
+   * (값은 복제하지 않는다). 어느 단계도 가리키지 않은 수치만 하단 패널에 남는다.
+   */
+  steps?: { label: string; items: string[]; metricLabels?: string[] }[];
 };
 
 export const projects: Project[] = [
@@ -40,10 +55,10 @@ export const projects: Project[] = [
     audience: "외부 서비스",
     name: "쏙쏙 컴퍼니",
     tagline:
-      "Astro로 만들어진 통신·가전 비교 사이트를 Next.js로 옮기고, 웹폰트를 정밀 서브셋해 전송량을 절반으로 줄였다.",
+      "랜딩으로 만들다 서비스가 된 사이트. 데이터 페칭 시점을 색인 기준으로 가르고, SEO 불변식을 커밋 훅에 걸었다.",
     summary:
-      "8개 라우트 전체를 Astro에서 Next.js App Router(정적 익스포트)로 이전하면서 JSON-LD·SEO·유입 통계를 동등하게 재현했다. 이전 자체보다 어려웠던 건 '바뀌지 않았음'을 증명하는 쪽이었다 — 라우트별 HTML 바이트 비교와 시각 회귀 스냅샷으로 픽셀 동일성을 게이트에 걸었다. 그다음 웹폰트를 실제 사용 글리프만 남겨 서브셋했다.",
-    role: "프론트엔드 전담 · 마이그레이션 설계, 퍼블리싱, 성능 최적화, 배포 파이프라인",
+      "통신 상품 비교 사이트라 검색 유입이 곧 상담 신청이다. SEO를 이 프로젝트의 설계 축으로 잡고, API 응답이 메타·구조화 데이터에 프리렌더되도록 빌드타임 fetch를 택했다. 폴백은 전부 걷어내 API가 깨지면 빌드가 실패하게 했다 — 틀린 메타가 배포되느니 직전 배포본이 그대로 남는 편이 낫다.",
+    role: "프론트엔드 전담, SEO 게이트, 성능 최적화, 배포 파이프라인",
     team: "백엔드 1 · 프론트 1(본인) · 디자이너 1",
     period: "2026.06 – 진행중",
     status: "운영 중",
@@ -55,31 +70,47 @@ export const projects: Project[] = [
       "App Router",
       "정적 익스포트",
       "TypeScript",
-      "Swiper",
+      "Zod",
       "Playwright",
       "AWS Amplify",
     ],
     keywords: [
-      "Astro 마이그레이션",
+      "SEO 회귀 게이트",
+      "RSC 빌드타임 fetch",
+      "JSON-LD 구조화 데이터",
       "웹폰트 서브셋",
-      "시각 회귀 테스트",
       "JS 번들 예산",
-      "정적 사이트",
     ],
     featured: true,
     metrics: [
+      {
+        label: "Lighthouse SEO",
+        after: "100",
+        note: "성능 작업 전후 무변. 접근성·SEO 회귀 없음",
+      },
+      {
+        label: "SEO 게이트",
+        after: "8라우트 × 불변식 12종",
+        note: "하나라도 깨지면 커밋이 생성되지 않는다",
+      },
+      {
+        label: "백엔드 API",
+        before: "하드코딩 데이터",
+        after: "6종 · 폴백 0",
+        note: "API가 죽으면 빌드가 실패한다",
+      },
       {
         label: "웹폰트 전송량",
         before: "796KB",
         after: "149KB",
         delta: "−81%",
-        note: "실사용 글리프만 남긴 서브셋 5종",
+        note: "실사용 글리프 522자만 남긴 서브셋 5종",
       },
       {
         label: "Lighthouse Performance",
         before: "64",
         after: "82",
-        note: "통제 A/B — 외부 위젯 차단·모바일·동일 로컬, 3회 중앙값",
+        note: "통제 A/B 조건(외부 위젯 차단·모바일·동일 로컬), 3회 중앙값",
       },
       { label: "FCP", before: "4.6s", after: "2.0s", delta: "−57%" },
       { label: "LCP", before: "7.9s", after: "4.6s", delta: "−42%" },
@@ -99,24 +130,124 @@ export const projects: Project[] = [
         after: "단위 138 · E2E 24 · 시각 회귀 8종",
         note: "픽셀 동일성 검증 포함",
       },
-      { label: "CSS", before: "7,891줄", after: "7,363줄", note: "죽은 규칙 0" },
     ],
     highlights: [
       {
-        title: "폰트 서브셋 — 커닝 손실을 픽셀 비교로 잡아냈다",
-        body: "빌드 산출물 HTML에서 실제 글리프를 뽑아 폰트를 서브셋했다. 첫 구현은 정규식으로 문자를 걸렀는데 공백과 &를 빼먹어 브라우저가 원본 5벌을 전부 내려받아 925KB로 오히려 나빠졌다 — 이미 설치돼 있던 jsdom 파싱으로 교체했다. 더 고약했던 건 육안으로 보이지 않는 커닝 손실이었다. 텍스트가 1~4px 밀리는 것을 시각 회귀 픽셀 비교로만 발견했고, harfbuzz를 직접 호출해 레거시 kern 테이블을 보존하는 조합을 A~G까지 실측해 찾았다. weight당 +3.8KB를 치르고 원본 대비 픽셀 차이 0을 얻었다.",
+        title: "정적 사이트에서는 데이터를 언제 가져오느냐가 곧 색인 여부다",
+        steps: [
+          {
+            label: "문제",
+            items: [
+              "FAQ 클라이언트 fetch → 프리렌더 HTML에서 누락 → SEO 게이트(DOM↔JSON-LD 1:1) 실패",
+            ],
+          },
+          {
+            label: "해결",
+            items: [
+              "색인 대상(FAQ·GNB·요금제) → RSC 빌드타임 fetch로 HTML·JSON-LD에 프리렌더",
+              "실시간 데이터(상담·방문 로그) → 클라이언트 런타임 분리",
+              "가격 하이브리드는 JSON-LD가 빌드 값이라 화면과 구조화 데이터가 어긋나 기각. 신선도는 재배포 훅으로 처리",
+              "Schema-First 방식으로 프론트가 API 계약 7종 선정의, zod로 응답 1:1 미러링",
+            ],
+          },
+          {
+            label: "성과",
+            items: [
+              "API 6종을 붙이는 동안 클라이언트 번들 증가 0",
+              "응답 필드 누락 시 빌드 단계에서 차단",
+            ],
+            metricLabels: ["JS 번들"],
+          },
+        ],
       },
       {
-        title: "측정을 신뢰하는 법 — 단일 수치는 쓰지 않는다",
-        body: "같은 배포본을 네 번 재니 Performance가 67·72·74·85로 흔들렸다(LCP 6.4·6.3·6.0·3.8s). 한 번만 쟀다면 운 좋은 실행 하나를 기준선으로 박을 뻔했다. 이후 모든 수치는 3회 중앙값 + 외부 위젯을 차단한 통제 조건에서만 채택했고, 절대 타이밍보다 바이트 수와 캐시 히트를 1차 신호로 삼았다.",
+        title: "SEO 100점은 측정한 순간의 스냅샷이다. 커밋 훅으로 고정했다",
+        steps: [
+          {
+            label: "문제",
+            items: [
+              "메타·OG 경로가 바뀌면 SEO가 무경고로 깨지고 배포 후에야 발견",
+              "초기 게이트는 Astro 산출물 diff 방식이라 기준선이 VCS 밖, 로컬에서만 동작",
+            ],
+          },
+          {
+            label: "해결",
+            items: [
+              "SEO 불변식 검사 스크립트를 작성해 pre-commit 훅에 연결",
+              "검사: title·description 중복 · canonical↔og:url · 참조 이미지 실존 · JSON-LD @type · FAQ DOM↔JSON-LD 배열 비교",
+              "산출물 자체 검증으로 전환. 홈 canonical에서 origin을 역산해 환경변수 불필요",
+              "판정 로직은 I/O 없는 순수 함수 · 테스트 18개",
+              "결함 주입(canonical slash · OG 이미지 삭제)으로 검출 실증",
+            ],
+            metricLabels: ["SEO 게이트", "테스트"],
+          },
+          {
+            label: "성과",
+            items: [
+              "커밋마다 build → test → verify:seo · 실패 시 커밋 차단",
+              "로컬·CI 동일 결과",
+            ],
+            metricLabels: ["Lighthouse SEO"],
+          },
+        ],
       },
       {
-        title: "효과 없는 최적화는 되돌렸다",
-        body: "Lighthouse가 지적한 fetchPriority를 히어로 이미지에 넣었지만, 적용 전후 우선순위가 둘 다 High로 동일했고 LCP도 4.6s에서 변하지 않았다. LCP 단계가 Load Delay 40ms · Render Delay 2,991ms라 fetchpriority가 줄일 구간 자체가 없었다. 실측으로 무효를 확인하고 제거했다.",
+        title: "폴백이 지키고 있던 건 사용자가 아니라 빌드 파이프라인이었다",
+        steps: [
+          {
+            label: "문제",
+            items: [
+              "빌드 중단 방지용 하드코딩 폴백 운용 중 FAQ 문구가 API와 분기된 것을 발견",
+              "빌드타임 전용 fetch라 폴백은 장애 방어가 아니라 스테일 데이터 배포 경로였음",
+            ],
+          },
+          {
+            label: "해결",
+            items: [
+              "6개 fetch 전부 throw로 전환 · 폴백 상수 삭제",
+              "테스트 12개를 폴백 검증 → throw 검증으로 반전",
+              "잘못된 API URL로 빌드해 exit 1 실증",
+            ],
+          },
+          {
+            label: "성과",
+            items: ["빌드 실패 시 직전 배포본이 유지되어 스테일 데이터 배포 경로 제거"],
+            metricLabels: ["백엔드 API"],
+          },
+        ],
       },
       {
-        title: "데이터 소스에 폴백을 두지 않았다",
-        body: "카테고리·FAQ·상품 데이터는 빌드 타임 API가 정본이고 폴백이 없다. API가 죽으면 빌드가 실패한다 — 의도한 동작이고, 빌드 실패 자체를 검증했다. 낡은 폴백 데이터가 조용히 배포되는 것보다 배포가 멈추는 쪽이 안전하다고 봤다.",
+        title: "폰트 5벌이 대역폭을 독점해 LCP 이미지가 굶고 있었다",
+        steps: [
+          {
+            label: "문제",
+            items: [
+              "폰트 5벌 동시 요청(각 160KB) → 저속 4G에서 4초 대역폭 점유, LCP 이미지 대기",
+              "font-display swap이라 렌더 블로킹이 아닌 대역폭 경합. 차단 실험으로 Performance 31점 값 확인",
+            ],
+          },
+          {
+            label: "해결",
+            items: [
+              "빌드 산출물 HTML에서 실사용 글리프 522자 추출 후 서브셋",
+              "정규식 추출이 공백·& 누락 → 원본 5벌 전량 다운로드(925KB 개악) → jsdom 파싱으로 교체",
+              "커닝 손실(1~4px 밀림)은 시각 회귀 픽셀 비교로만 검출 → harfbuzz 직접 호출로 kern 테이블 보존",
+            ],
+          },
+          {
+            label: "성과",
+            items: [
+              "커닝 보존 비용 weight당 3.8KB로 원본 대비 픽셀 차이 0",
+            ],
+            metricLabels: [
+              "웹폰트 전송량",
+              "Lighthouse Performance",
+              "FCP",
+              "LCP",
+              "페이지 총 전송량",
+            ],
+          },
+        ],
       },
     ],
   },

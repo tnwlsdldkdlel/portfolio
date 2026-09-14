@@ -1048,6 +1048,16 @@ ol {
   margin-top: 0;
 }
 
+/* 단계 안에 섞이는 측정값 — 문장과 같은 줄 흐름에 두되 숫자만 또렷하게 */
+.bullets__metric {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.bullets__metric::before {
+  background: var(--accent);
+}
+
 .readout__row {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -1281,6 +1291,41 @@ ol {
   height: 4px;
   border-radius: 50%;
   background: var(--ink-3);
+}
+
+/* 단계가 뚜렷한 근거 — 라벨 열을 고정해 같은 위치에서 눈이 멈추게 한다 */
+.steps {
+  display: grid;
+  max-width: 62ch;
+  margin: 0;
+}
+
+/* 단계마다 선을 그어 어디서 끊기는지 보이게 한다 */
+.steps > div {
+  display: grid;
+  grid-template-columns: 4.25rem 1fr;
+  gap: 0 0.85rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.steps dt {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.7;
+  color: var(--accent);
+  word-break: keep-all;
+}
+
+.steps dd {
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .steps > div {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
 }
 
 /* 드래그해 놓은 것처럼 — 글자 길이와 무관하게 한 줄 전체를 덮는다 */

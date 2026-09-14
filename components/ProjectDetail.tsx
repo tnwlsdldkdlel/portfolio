@@ -1,11 +1,22 @@
 import Link from "next/link";
-import type { Project } from "@/content/projects";
+import type { Metric, Project } from "@/content/projects";
 import { projects } from "@/content/projects";
 import { site } from "@/content/profile";
 import { BackLink } from "@/components/BackLink";
 import { Readout } from "@/components/Readout";
-import { toNumber } from "@/lib/metric.mjs";
 import { toBullets } from "@/lib/sentences.mjs";
+
+/** 측정값을 불릿 한 줄로. 조건(note)까지 붙여야 수치가 혼자 떠다니지 않는다. */
+function metricLine(m: Metric) {
+  const change = m.before ? `${m.before} → ${m.after}` : m.after;
+  return [
+    `${m.label} ${change}`,
+    m.delta && `(${m.delta})`,
+    m.note && `· ${m.note}`,
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
 
 export function ProjectDetail({
   project,
@@ -14,16 +25,18 @@ export function ProjectDetail({
   project: Project;
   inModal?: boolean;
 }) {
+  // 단계가 가리킨 수치는 그 단계의 불릿으로, 나머지만 하단 패널로 내린다.
+  const byLabel = new Map((project.metrics ?? []).map((m) => [m.label, m]));
+  const claimed = new Set(
+    project.highlights.flatMap((h) =>
+      (h.steps ?? []).flatMap((s) => s.metricLabels ?? []),
+    ),
+  );
+  const rest = (project.metrics ?? []).filter((m) => !claimed.has(m.label));
+
   const i = projects.findIndex((p) => p.slug === project.slug);
   const prev = projects[(i - 1 + projects.length) % projects.length];
   const next = projects[(i + 1) % projects.length];
-  // 크게 세울 수 있는 건 수 하나로 읽히는 값뿐 — 서술형 지표는 아래 표에서 읽힌다
-  const figures = (project.metrics ?? []).filter(
-    (m) => toNumber(m.after) !== null,
-  );
-  const improved = figures.filter((m) => m.before);
-  const wins = (improved.length ? improved : figures).slice(0, 3);
-
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
@@ -66,7 +79,7 @@ export function ProjectDetail({
 
         <dl className="brief">
           <div className="brief__item brief__item--wide">
-            <dt className="brief__key">내가 맡은 것</dt>
+            <dt className="brief__key">담당</dt>
             <dd className="brief__val">{project.role}</dd>
           </div>
           <div className="brief__item">
@@ -83,37 +96,11 @@ export function ProjectDetail({
           className="prose"
           style={{
             marginTop: "clamp(2.5rem, 6vw, 4rem)",
-            maxWidth: "68ch",
             color: "var(--ink-2)",
           }}
         >
           {project.summary}
         </p>
-
-        <section style={{ marginTop: "clamp(2.5rem, 6vw, 4rem)" }}>
-          <h2 className="kicker">판단과 근거</h2>
-          <ul className="notes">
-            {project.highlights.map((h) => (
-              <li className="note" key={h.title}>
-                <h3 className="note__title">{h.title}</h3>
-                <ul className="bullets">
-                  {toBullets(h.body).map((line) => (
-                    <li key={line}>{line}</li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {project.metrics && (
-          <section style={{ marginTop: "clamp(2.5rem, 6vw, 4rem)" }}>
-            <h2 className="kicker">전체 측정 기록</h2>
-            <div className="panel">
-              <Readout metrics={project.metrics} />
-            </div>
-          </section>
-        )}
 
         <dl className="spec">
           <div className="spec__item">
@@ -146,6 +133,57 @@ export function ProjectDetail({
             </dd>
           </div>
         </dl>
+
+        <section style={{ marginTop: "clamp(2.5rem, 6vw, 4rem)" }}>
+          <h2 className="kicker">주요 작업</h2>
+          <ul className="notes">
+            {project.highlights.map((h) => (
+              <li className="note" key={h.title}>
+                <h3 className="note__title">{h.title}</h3>
+                {h.steps ? (
+                  <dl className="steps">
+                    {h.steps.map((s) => (
+                      <div key={s.label}>
+                        <dt>{s.label}</dt>
+                        <dd>
+                          <ul className="bullets">
+                            {s.items.map((line) => (
+                              <li key={line}>{line}</li>
+                            ))}
+                            {(s.metricLabels ?? []).map((l) => {
+                              const m = byLabel.get(l);
+                              return m ? (
+                                <li className="bullets__metric" key={l}>
+                                  {metricLine(m)}
+                                </li>
+                              ) : null;
+                            })}
+                          </ul>
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                ) : (
+                  <ul className="bullets">
+                    {toBullets(h.body ?? "").map((line) => (
+                      <li key={line}>{line}</li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
+
+          {/* 어느 판단에도 안 붙은 수치만 남는다. 전부 붙었으면 이 패널은 사라진다. */}
+          {rest.length > 0 && (
+            <div
+              className="panel"
+              style={{ marginTop: "clamp(1.75rem, 4vw, 2.5rem)" }}
+            >
+              <Readout metrics={rest} />
+            </div>
+          )}
+        </section>
 
         {/* 팝업 안에서는 기록을 넘겨도 히스토리를 쌓지 않는다 — 닫으면 목록으로 한 번에 */}
         <nav className="doc__nav" aria-label="다른 기록">

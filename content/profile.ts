@@ -106,8 +106,8 @@ export const colophon = {
     },
     {
       label: "웹폰트",
-      value: "125KB",
-      note: "Pretendard 2벌 + 인사말용 1벌 · 원본 1,536KB에서 −91.8%",
+      value: "127.5KB",
+      note: "Pretendard 2벌 + 인사말용 1벌 · 원본 1,536KB에서 −91.7%",
     },
     {
       label: "JavaScript",
