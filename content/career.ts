@@ -35,7 +35,7 @@ export const skills = [
   { group: "프론트엔드", items: ["React", "Next.js", "TypeScript", "Vue", "JavaScript", "HTML/CSS"] },
   { group: "상태·데이터", items: ["Zustand", "TanStack Query", "Redux", "jotai", "Zod"] },
   { group: "측정·테스트", items: ["Lighthouse CLI", "Chrome DevTools", "React Profiler", "Playwright", "Puppeteer", "Vitest"] },
-  { group: "인프라·협업", items: ["AWS S3·CloudFront·EC2", "GitHub Actions", "CodeBuild", "NginX", "Node.js"] },
+  { group: "인프라·협업", items: ["AWS S3·CloudFront·EC2·Amplify", "GitHub Actions", "CodeBuild", "NginX", "Node.js"] },
 ];
 
 export type CareerEntry = {

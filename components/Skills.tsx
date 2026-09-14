@@ -1,36 +1,18 @@
 import { skills } from "@/content/career";
-import { profile } from "@/content/profile";
 
+/**
+ * 쓰는 기술만 나열한다. 무엇을 어떻게 했는지는 프로젝트 섹션이 수치로 말한다.
+ * 서술형 역량(profile.capabilities)은 화면에 싣지 않고 llms.txt 로만 내보낸다.
+ */
 export function Skills() {
   return (
-    <>
-      <div className="cards">
-        {profile.capabilities.map((c) => (
-          <div className="card" key={c.title}>
-            <h3 className="card__title">{c.title}</h3>
-            <ul>
-              {c.items.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-
-      <div className="skills">
-        {skills.map((s) => (
-          <div className="skills__group" key={s.group}>
-            <h3 className="skills__title">{s.group}</h3>
-            <span className="tags">
-              {s.items.map((i) => (
-                <span className="tag" key={i}>
-                  {i}
-                </span>
-              ))}
-            </span>
-          </div>
-        ))}
-      </div>
-    </>
+    <ul className="skills">
+      {skills.map((s) => (
+        <li className="skill" key={s.group}>
+          <h3 className="skill__group">{s.group}</h3>
+          <p className="skill__items">{s.items.join(" · ")}</p>
+        </li>
+      ))}
+    </ul>
   );
 }
